@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
+import '../theme/app_radius.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — PREMIUM CARD CONTAINER
+/// ==============================================================================
 class SmylCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry? padding;
@@ -9,6 +13,7 @@ class SmylCard extends StatelessWidget {
   final bool isHighlighted;
   final Color? backgroundColor;
   final double borderRadius;
+  final Border? customBorder;
 
   const SmylCard({
     super.key,
@@ -18,45 +23,39 @@ class SmylCard extends StatelessWidget {
     this.onTap,
     this.isHighlighted = false,
     this.backgroundColor,
-    this.borderRadius = 16.0,
+    this.borderRadius = AppRadius.card,
+    this.customBorder,
   });
 
   @override
   Widget build(BuildContext context) {
-    final borderGradient = isHighlighted
-        ? const LinearGradient(
-            colors: [AppColors.electricCyan, AppColors.auroraTeal],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          )
-        : null;
+    final border = customBorder ??
+        Border.all(
+          color: isHighlighted
+              ? AppColors.electricCyan.withOpacity(0.8)
+              : AppColors.surfaceBorder,
+          width: isHighlighted ? 1.5 : 1.0,
+        );
 
     final cardContent = Container(
       padding: padding,
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.surfaceCard,
+        color: backgroundColor ?? (isHighlighted ? AppColors.cardElevated : AppColors.surfaceCard),
         borderRadius: BorderRadius.circular(borderRadius),
-        border: borderGradient == null
-            ? Border.all(
-                color: isHighlighted
-                    ? AppColors.electricCyan
-                    : AppColors.surfaceBorder,
-                width: isHighlighted ? 1.5 : 1.0,
-              )
-            : null,
+        border: border,
         boxShadow: isHighlighted
             ? [
                 BoxShadow(
-                  color: AppColors.electricCyan.withOpacity(0.12),
+                  color: AppColors.electricCyan.withOpacity(0.08),
                   blurRadius: 16,
                   offset: const Offset(0, 4),
                 )
               ]
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.25),
-                  blurRadius: 10,
-                  offset: const Offset(0, 4),
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 )
               ],
       ),

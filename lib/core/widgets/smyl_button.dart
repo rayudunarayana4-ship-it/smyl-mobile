@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../theme/app_radius.dart';
 
 enum SmylButtonVariant { primary, secondary, outline, ghost, danger, success }
 
+/// ==============================================================================
+/// SMYL GLOBAL — DESIGN SYSTEM BUTTON
+/// ==============================================================================
 class SmylButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
@@ -23,7 +27,7 @@ class SmylButton extends StatelessWidget {
     this.isLoading = false,
     this.height = 52.0,
     this.width = double.infinity,
-    this.borderRadius = 14.0,
+    this.borderRadius = AppRadius.button,
   });
 
   @override
@@ -32,11 +36,11 @@ class SmylButton extends StatelessWidget {
       if (onPressed == null) return AppColors.slate;
       switch (variant) {
         case SmylButtonVariant.primary:
-          return AppColors.obsidian;
+          return AppColors.obsidian; // High-contrast dark text on bright Aurora Cyan
         case SmylButtonVariant.secondary:
           return AppColors.warmIvory;
         case SmylButtonVariant.outline:
-          return AppColors.warmIvory;
+          return AppColors.electricCyan;
         case SmylButtonVariant.ghost:
           return AppColors.electricCyan;
         case SmylButtonVariant.danger:
@@ -76,25 +80,19 @@ class SmylButton extends StatelessWidget {
       ],
     );
 
+    // Primary Button: Solid Aurora Cyan with dark text & subtle glow
     if (variant == SmylButtonVariant.primary) {
       return Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
-          gradient: onPressed == null
-              ? null
-              : const LinearGradient(
-                  colors: [AppColors.electricCyan, AppColors.auroraTeal],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-          color: onPressed == null ? AppColors.slateDark : null,
+          color: onPressed == null ? AppColors.slateDark : AppColors.electricCyan,
           boxShadow: onPressed == null
               ? null
               : [
                   BoxShadow(
-                    color: AppColors.electricCyan.withOpacity(0.28),
+                    color: AppColors.electricCyan.withOpacity(0.22),
                     blurRadius: 14,
                     offset: const Offset(0, 4),
                   ),
@@ -106,17 +104,45 @@ class SmylButton extends StatelessWidget {
           child: InkWell(
             onTap: isLoading ? null : onPressed,
             borderRadius: BorderRadius.circular(borderRadius),
+            splashColor: AppColors.obsidian.withOpacity(0.12),
+            highlightColor: AppColors.obsidian.withOpacity(0.06),
             child: Center(child: content),
           ),
         ),
       );
     }
 
+    // Secondary Button: Dark surface (#111923) + Cyan border
+    if (variant == SmylButtonVariant.secondary) {
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          color: AppColors.surfaceCard,
+          borderRadius: BorderRadius.circular(borderRadius),
+          border: Border.all(
+            color: onPressed == null ? AppColors.surfaceBorder : AppColors.electricCyan.withOpacity(0.8),
+            width: 1.2,
+          ),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(borderRadius),
+          child: InkWell(
+            onTap: isLoading ? null : onPressed,
+            borderRadius: BorderRadius.circular(borderRadius),
+            splashColor: AppColors.electricCyan.withOpacity(0.08),
+            highlightColor: AppColors.electricCyan.withOpacity(0.04),
+            child: Center(child: content),
+          ),
+        ),
+      );
+    }
+
+    // Outline / Ghost / Other variants
     Color getBgColor() {
-      if (onPressed == null) return AppColors.deepSpace;
+      if (onPressed == null) return AppColors.surfaceCard;
       switch (variant) {
-        case SmylButtonVariant.secondary:
-          return AppColors.surfaceElevated;
         case SmylButtonVariant.outline:
         case SmylButtonVariant.ghost:
           return Colors.transparent;
@@ -124,8 +150,8 @@ class SmylButton extends StatelessWidget {
           return AppColors.danger;
         case SmylButtonVariant.success:
           return AppColors.success;
-        case SmylButtonVariant.primary:
-          return AppColors.electricCyan;
+        default:
+          return AppColors.surfaceCard;
       }
     }
 
@@ -134,12 +160,9 @@ class SmylButton extends StatelessWidget {
         return Border.all(
           color: onPressed == null
               ? AppColors.surfaceBorder
-              : AppColors.surfaceBorderHighlight.withOpacity(0.6),
+              : AppColors.electricCyan.withOpacity(0.5),
           width: 1.2,
         );
-      }
-      if (variant == SmylButtonVariant.secondary) {
-        return Border.all(color: AppColors.surfaceBorder, width: 1.0);
       }
       return null;
     }
@@ -158,6 +181,7 @@ class SmylButton extends StatelessWidget {
         child: InkWell(
           onTap: isLoading ? null : onPressed,
           borderRadius: BorderRadius.circular(borderRadius),
+          splashColor: AppColors.electricCyan.withOpacity(0.08),
           child: Center(child: content),
         ),
       ),

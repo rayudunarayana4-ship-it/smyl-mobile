@@ -156,7 +156,7 @@ class SenderHomeView extends ConsumerWidget {
               SmylButton(
                 text: 'Post Journey →',
                 height: 44,
-                variant: SmylButtonVariant.outline,
+                variant: SmylButtonVariant.secondary,
                 onPressed: () => context.push(AppRoutes.postJourney),
               ),
             ],

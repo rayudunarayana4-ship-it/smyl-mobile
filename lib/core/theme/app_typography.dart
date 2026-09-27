@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — DESIGN SYSTEM TYPOGRAPHY HIERARCHY
+/// ==============================================================================
 class AppTypography {
+  AppTypography._();
+
   static TextStyle get displayLarge => GoogleFonts.plusJakartaSans(
         fontSize: 32,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.w800,
         color: AppColors.warmIvory,
         letterSpacing: -0.8,
         height: 1.2,
@@ -114,6 +119,13 @@ class AppTypography {
         fontSize: 11,
         fontWeight: FontWeight.w700,
         color: AppColors.electricCyan,
+        letterSpacing: 1.0,
+      );
+
+  static TextStyle get labelTeal => GoogleFonts.plusJakartaSans(
+        fontSize: 11,
+        fontWeight: FontWeight.w700,
+        color: AppColors.auroraTeal,
         letterSpacing: 1.0,
       );
 

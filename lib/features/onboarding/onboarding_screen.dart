@@ -8,6 +8,9 @@ import '../../core/widgets/smyl_button.dart';
 import '../../shared/models/user_model.dart';
 import '../../shared/services/app_repository.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — GLOBAL AURORA ONBOARDING SCREEN
+/// ==============================================================================
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
 
@@ -21,25 +24,25 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   final List<_OnboardingData> _screens = const [
     _OnboardingData(
-      headline: 'Need to send\nsomething?',
-      explanation: 'Find a verified traveller already heading your way.',
-      buttonText: 'SEND AN ITEM',
+      headline: 'SEND SMARTER',
+      explanation: 'Connect with verified travellers heading your way.',
+      buttonText: 'SEND AN ITEM →',
       icon: Icons.outbox_rounded,
       accentColor: AppColors.electricCyan,
       targetRole: UserRole.sender,
     ),
     _OnboardingData(
-      headline: 'Already\ntravelling?',
-      explanation: 'Use your available luggage space and earn.',
-      buttonText: 'TRAVEL & EARN',
+      headline: 'TRAVEL & CARRY',
+      explanation: 'Use your available luggage space on your journey.',
+      buttonText: 'TRAVEL & CARRY →',
       icon: Icons.luggage_rounded,
       accentColor: AppColors.auroraTeal,
       targetRole: UserRole.traveller,
     ),
     _OnboardingData(
-      headline: 'Every handover\nis tracked.',
-      explanation: 'OTP verification keeps every transaction transparent.',
-      buttonText: 'GET STARTED',
+      headline: 'GLOBAL ESCROW',
+      explanation: 'Every handover is verified with cryptographic OTP codes.',
+      buttonText: 'ENTER SMYL GLOBAL',
       icon: Icons.verified_user_rounded,
       accentColor: AppColors.champagneSand,
       targetRole: UserRole.both,
@@ -69,9 +72,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.obsidian,
+      backgroundColor: AppColors.obsidian, // #070A0F
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        elevation: 0,
         actions: [
           TextButton(
             onPressed: () => context.go(AppRoutes.mainShell),
@@ -101,14 +105,14 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const SizedBox(height: 24),
-                        // Signature Circular Artwork
+                        const SizedBox(height: 32),
+                        // Signature Circular Artwork with subtle Aurora Glow
                         Container(
                           width: 180,
                           height: 180,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.deepSpace,
+                            color: AppColors.surfaceCard, // #111923
                             border: Border.all(
                               color: data.accentColor.withOpacity(0.35),
                               width: 1.5,
@@ -143,7 +147,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 48),
 
                         // Headline
                         Text(
@@ -152,9 +156,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                           style: AppTypography.displayLarge.copyWith(
                             height: 1.2,
                             fontWeight: FontWeight.w800,
+                            letterSpacing: 1.5,
                           ),
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 14),
 
                         // Short Explanation
                         Text(
@@ -185,7 +190,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                       (index) => AnimatedContainer(
                         duration: const Duration(milliseconds: 250),
                         margin: const EdgeInsets.symmetric(horizontal: 4),
-                        width: _currentIndex == index ? 22 : 8,
+                        width: _currentIndex == index ? 24 : 8,
                         height: 8,
                         decoration: BoxDecoration(
                           color: _currentIndex == index

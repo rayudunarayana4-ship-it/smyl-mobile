@@ -203,7 +203,7 @@ class _HomeWrapperScreenState extends ConsumerState<HomeWrapperScreen> {
           ),
         ),
         child: BottomNavigationBar(
-          backgroundColor: AppColors.deepSpace,
+          backgroundColor: AppColors.bottomNav,
           selectedItemColor: AppColors.electricCyan,
           unselectedItemColor: AppColors.slate,
           currentIndex: currentIndex,

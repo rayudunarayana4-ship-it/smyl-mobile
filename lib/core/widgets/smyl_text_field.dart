@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
+import '../theme/app_radius.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — DESIGN SYSTEM TEXT FIELD
+/// ==============================================================================
 class SmylTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
@@ -63,9 +67,24 @@ class SmylTextField extends StatelessWidget {
           ),
           cursorColor: AppColors.electricCyan,
           decoration: InputDecoration(
+            filled: true,
+            fillColor: AppColors.surfaceCard, // #111923
             hintText: hintText,
+            hintStyle: AppTypography.bodyMedium.copyWith(color: AppColors.slate),
             prefixIcon: prefixIcon,
             suffixIcon: suffixIcon,
+            border: OutlineInputBorder(
+              borderRadius: AppRadius.radiusMd,
+              borderSide: const BorderSide(color: AppColors.inputBorder, width: 1.0),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: AppRadius.radiusMd,
+              borderSide: const BorderSide(color: AppColors.inputBorder, width: 1.0),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: AppRadius.radiusMd,
+              borderSide: const BorderSide(color: AppColors.electricCyan, width: 1.5),
+            ),
           ),
         ),
       ],

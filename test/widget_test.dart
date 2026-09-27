@@ -13,7 +13,7 @@ void main() {
     // Initial splash frame should render SMYL brand tagline
     expect(find.text('SMYL'), findsWidgets);
     expect(find.text('GLOBAL'), findsWidgets);
-    expect(find.text('“Your Journey Can Carry More.”'), findsOneWidget);
+    expect(find.text('Move smarter with every journey.'), findsOneWidget);
 
     // Pump past splash duration
     await tester.pump(const Duration(milliseconds: 3500));

@@ -5,6 +5,9 @@ import '../../core/constants/route_constants.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/widgets/smyl_logo.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — GLOBAL AURORA SPLASH SCREEN
+/// ==============================================================================
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -29,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
       duration: const Duration(milliseconds: 2400),
     );
 
-    _logoScaleAnimation = Tween<double>(begin: 0.7, end: 1.0).animate(
+    _logoScaleAnimation = Tween<double>(begin: 0.8, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
         curve: const Interval(0.0, 0.45, curve: Curves.easeOutCubic),
@@ -76,36 +79,46 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.obsidian,
+      backgroundColor: AppColors.obsidian, // #070A0F
       body: Stack(
         children: [
-          // Background ambient gradient glow
+          // Background subtle atmospheric Aurora glow
           Positioned(
-            top: -100,
-            right: -100,
+            top: -120,
+            right: -80,
+            child: Container(
+              width: 320,
+              height: 320,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.electricCyan.withOpacity(0.09),
+                    Colors.transparent,
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: -100,
+            left: -80,
             child: Container(
               width: 300,
               height: 300,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: AppColors.electricCyan.withOpacity(0.08),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: -80,
-            left: -80,
-            child: Container(
-              width: 260,
-              height: 260,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.auroraTeal.withOpacity(0.06),
+                gradient: RadialGradient(
+                  colors: [
+                    AppColors.auroraTeal.withOpacity(0.07),
+                    Colors.transparent,
+                  ],
+                ),
               ),
             ),
           ),
 
-          // Center Logo and Route Animation
+          // Center Logo, Brand Headline & Route Animation
           Center(
             child: AnimatedBuilder(
               animation: _controller,
@@ -154,13 +167,12 @@ class _SplashScreenState extends State<SplashScreen>
                           ),
                           const SizedBox(height: 10),
                           const Text(
-                            '“Your Journey Can Carry More.”',
+                            'Move smarter with every journey.',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.champagneSand,
-                              letterSpacing: 0.8,
-                              fontStyle: FontStyle.italic,
+                              color: AppColors.slateLight,
+                              letterSpacing: 0.5,
                             ),
                           ),
                         ],
@@ -169,10 +181,10 @@ class _SplashScreenState extends State<SplashScreen>
 
                     const SizedBox(height: 48),
 
-                    // Animated Global Route Trajectory Line
+                    // Elegant Global Route Animation
                     SizedBox(
-                      width: 180,
-                      height: 4,
+                      width: 200,
+                      height: 24,
                       child: CustomPaint(
                         painter: _SplashRouteLinePainter(
                           progress: _routeProgressAnimation.value,
@@ -185,19 +197,19 @@ class _SplashScreenState extends State<SplashScreen>
             ),
           ),
 
-          // Bottom subtle versioning
+          // Bottom subtle protocol badge
           Positioned(
             bottom: 24,
             left: 0,
             right: 0,
             child: Center(
               child: Text(
-                'PREMIUM TRAVEL LOGISTICS PROTOCOL',
+                'GLOBAL AURORA PROTOCOL',
                 style: TextStyle(
                   fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.slate.withOpacity(0.6),
-                  letterSpacing: 1.5,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.slate.withOpacity(0.5),
+                  letterSpacing: 1.8,
                 ),
               ),
             ),
@@ -215,33 +227,54 @@ class _SplashRouteLinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final startY = size.height / 2;
     final bgPaint = Paint()
       ..color = AppColors.surfaceBorder
-      ..strokeWidth = 2.0
+      ..strokeWidth = 1.6
       ..strokeCap = StrokeCap.round;
-    canvas.drawLine(Offset(0, size.height / 2),
-        Offset(size.width, size.height / 2), bgPaint);
+    canvas.drawLine(Offset(0, startY), Offset(size.width, startY), bgPaint);
+
+    // Origin node
+    canvas.drawCircle(
+      Offset(0, startY),
+      3.0,
+      Paint()..color = AppColors.auroraTeal,
+    );
+
+    // Destination node
+    canvas.drawCircle(
+      Offset(size.width, startY),
+      3.0,
+      Paint()..color = AppColors.electricCyan,
+    );
 
     if (progress > 0) {
       final activePaint = Paint()
         ..shader = const LinearGradient(
-          colors: [AppColors.electricCyan, AppColors.auroraTeal],
+          colors: [AppColors.auroraTeal, AppColors.electricCyan],
         ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
-        ..strokeWidth = 2.5
+        ..strokeWidth = 2.4
         ..strokeCap = StrokeCap.round;
 
       final currentX = size.width * progress;
       canvas.drawLine(
-        Offset(0, size.height / 2),
-        Offset(currentX, size.height / 2),
+        Offset(0, startY),
+        Offset(currentX, startY),
         activePaint,
       );
 
       // Glowing tip
       canvas.drawCircle(
-        Offset(currentX, size.height / 2),
-        4.0,
-        Paint()..color = AppColors.electricCyan,
+        Offset(currentX, startY),
+        5.0,
+        Paint()
+          ..color = AppColors.electricCyan.withOpacity(0.4)
+          ..style = PaintingStyle.fill,
+      );
+      canvas.drawCircle(
+        Offset(currentX, startY),
+        2.5,
+        Paint()..color = AppColors.warmIvory,
       );
     }
   }

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 import '../theme/app_typography.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — GLOBAL AURORA ROUTE VISUALIZER
+/// ==============================================================================
 class SmylRouteVisualizer extends StatefulWidget {
   final String originCode;
   final String originCity;
@@ -62,7 +65,7 @@ class _SmylRouteVisualizerState extends State<SmylRouteVisualizer>
                 Text(
                   widget.originCode.toUpperCase(),
                   style: AppTypography.displayMedium.copyWith(
-                    color: AppColors.champagneSand,
+                    color: AppColors.warmIvory,
                     fontWeight: FontWeight.w800,
                     letterSpacing: 1.2,
                   ),
@@ -80,7 +83,7 @@ class _SmylRouteVisualizerState extends State<SmylRouteVisualizer>
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: AppColors.deepSpace,
+                  color: AppColors.surfaceElevated,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(color: AppColors.surfaceBorder),
                 ),
@@ -90,7 +93,7 @@ class _SmylRouteVisualizerState extends State<SmylRouteVisualizer>
                     const Icon(
                       Icons.flight_takeoff_rounded,
                       size: 13,
-                      color: AppColors.auroraTeal,
+                      color: AppColors.electricCyan,
                     ),
                     const SizedBox(width: 6),
                     Text(
@@ -168,22 +171,14 @@ class _RouteCurvePainter extends CustomPainter {
     path.moveTo(start.dx, start.dy);
     path.quadraticBezierTo(controlPoint.dx, controlPoint.dy, end.dx, end.dy);
 
-    // Track baseline (faded dashed line)
+    // 1. Upcoming Route Baseline: subtle muted grey (#24303D)
     final basePaint = Paint()
       ..color = AppColors.surfaceBorder
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0;
+      ..strokeWidth = 1.8;
     canvas.drawPath(path, basePaint);
 
-    // Active progress path
-    final activePaint = Paint()
-      ..shader = const LinearGradient(
-        colors: [AppColors.champagneSand, AppColors.electricCyan],
-      ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.8
-      ..strokeCap = StrokeCap.round;
-
+    // 2. Active / Completed Route: Aurora Teal to Aurora Cyan gradient
     final t = progress.clamp(0.0, 1.0);
     final currentX = (1 - t) * (1 - t) * start.dx +
         2 * (1 - t) * t * controlPoint.dx +
@@ -194,54 +189,64 @@ class _RouteCurvePainter extends CustomPainter {
 
     const steps = 30;
     final targetStep = (steps * t).round();
-    final progressPath = Path();
-    progressPath.moveTo(start.dx, start.dy);
-    for (int i = 1; i <= targetStep; i++) {
-      final stepT = i / steps;
-      final x = (1 - stepT) * (1 - stepT) * start.dx +
-          2 * (1 - stepT) * stepT * controlPoint.dx +
-          stepT * stepT * end.dx;
-      final y = (1 - stepT) * (1 - stepT) * start.dy +
-          2 * (1 - stepT) * stepT * controlPoint.dy +
-          stepT * stepT * end.dy;
-      progressPath.lineTo(x, y);
+    if (targetStep > 0) {
+      final activePaint = Paint()
+        ..shader = const LinearGradient(
+          colors: [AppColors.auroraTeal, AppColors.electricCyan],
+        ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 2.4
+        ..strokeCap = StrokeCap.round;
+
+      final progressPath = Path();
+      progressPath.moveTo(start.dx, start.dy);
+      for (int i = 1; i <= targetStep; i++) {
+        final stepT = i / steps;
+        final x = (1 - stepT) * (1 - stepT) * start.dx +
+            2 * (1 - stepT) * stepT * controlPoint.dx +
+            stepT * stepT * end.dx;
+        final y = (1 - stepT) * (1 - stepT) * start.dy +
+            2 * (1 - stepT) * stepT * controlPoint.dy +
+            stepT * stepT * end.dy;
+        progressPath.lineTo(x, y);
+      }
+      canvas.drawPath(progressPath, activePaint);
     }
-    canvas.drawPath(progressPath, activePaint);
 
-    // Origin Node Pin
+    // Origin Node Pin (Aurora Teal)
     final originPaint = Paint()
-      ..color = AppColors.champagneSand
+      ..color = AppColors.auroraTeal
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(start, 4.5, originPaint);
+    canvas.drawCircle(start, 4.0, originPaint);
 
-    // Destination Node Pin
+    // Destination Node Pin (Aurora Cyan)
     final destPaint = Paint()
       ..color = AppColors.electricCyan
       ..style = PaintingStyle.fill;
-    canvas.drawCircle(end, 4.5, destPaint);
+    canvas.drawCircle(end, 4.0, destPaint);
 
-    // Current Moving Waypoint: Glowing ✦
+    // Current Moving Waypoint: Glowing ✦ Travel Point
     final currentPos = Offset(currentX, currentY);
 
-    final pulseRadius = 7 + pulseValue * 12;
+    final pulseRadius = 6 + pulseValue * 10;
     canvas.drawCircle(
       currentPos,
       pulseRadius,
       Paint()
-        ..color = AppColors.electricCyan.withOpacity(0.4 * (1 - pulseValue))
+        ..color = AppColors.electricCyan.withOpacity(0.35 * (1 - pulseValue))
         ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.8,
+        ..strokeWidth = 1.5,
     );
 
     // Solid core pin
     canvas.drawCircle(
       currentPos,
-      5.5,
+      4.5,
       Paint()..color = AppColors.warmIvory,
     );
     canvas.drawCircle(
       currentPos,
-      3.0,
+      2.5,
       Paint()..color = AppColors.electricCyan,
     );
   }

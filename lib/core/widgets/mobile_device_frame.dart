@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../theme/app_colors.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — RESPONSIVE MOBILE DEVICE FRAME (GLOBAL AURORA)
+/// ==============================================================================
 class MobileDeviceFrame extends StatelessWidget {
   final Widget child;
 
@@ -17,7 +20,7 @@ class MobileDeviceFrame extends StatelessWidget {
 
         // On desktop or widescreen browsers, frame the app inside a luxury phone bezel
         return Container(
-          color: const Color(0xFF06070A),
+          color: AppColors.obsidian, // Deep Obsidian (#070A0F)
           child: Center(
             child: Container(
               width: 393,
@@ -27,18 +30,18 @@ class MobileDeviceFrame extends StatelessWidget {
                 color: AppColors.obsidian,
                 borderRadius: BorderRadius.circular(52),
                 border: Border.all(
-                  color: const Color(0xFF2A364F),
-                  width: 3.5,
+                  color: AppColors.surfaceBorder, // Subtle (#24303D)
+                  width: 3.0,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.electricCyan.withOpacity(0.08),
+                    color: AppColors.electricCyan.withOpacity(0.06),
                     blurRadius: 40,
                     spreadRadius: 2,
                     offset: const Offset(0, 8),
                   ),
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.85),
+                    color: Colors.black.withOpacity(0.8),
                     blurRadius: 50,
                     offset: const Offset(0, 20),
                   ),
@@ -59,13 +62,13 @@ class MobileDeviceFrame extends StatelessWidget {
                       child: Center(
                         child: Container(
                           width: 120,
-                          height: 32,
+                          height: 30,
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: AppColors.obsidian,
                             borderRadius: BorderRadius.circular(20),
                             border: Border.all(
-                              color: const Color(0xFF1E2638),
-                              width: 1,
+                              color: AppColors.surfaceBorder,
+                              width: 1.0,
                             ),
                           ),
                           child: Row(
@@ -75,7 +78,7 @@ class MobileDeviceFrame extends StatelessWidget {
                                 width: 10,
                                 height: 10,
                                 decoration: const BoxDecoration(
-                                  color: Color(0xFF0F1522),
+                                  color: Color(0xFF0D121A),
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -83,7 +86,7 @@ class MobileDeviceFrame extends StatelessWidget {
                                 width: 8,
                                 height: 8,
                                 decoration: BoxDecoration(
-                                  color: AppColors.electricCyan.withOpacity(0.6),
+                                  color: AppColors.electricCyan.withOpacity(0.7),
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -103,7 +106,7 @@ class MobileDeviceFrame extends StatelessWidget {
                           width: 135,
                           height: 4.5,
                           decoration: BoxDecoration(
-                            color: AppColors.slate.withOpacity(0.6),
+                            color: AppColors.slate.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(3),
                           ),
                         ),

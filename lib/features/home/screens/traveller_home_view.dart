@@ -357,7 +357,7 @@ class TravellerHomeView extends ConsumerWidget {
         margin: const EdgeInsets.only(bottom: 24),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: const Color(0xFF1E1B4B),
+          color: AppColors.cardElevated,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: AppColors.electricCyan, width: 1.5),
           boxShadow: [

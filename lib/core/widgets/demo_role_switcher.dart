@@ -5,6 +5,9 @@ import '../../shared/models/user_model.dart';
 import '../../shared/models/transaction_status.dart';
 import '../../shared/services/app_repository.dart';
 
+/// ==============================================================================
+/// SMYL GLOBAL — DEMO ROLE SWITCHER (GLOBAL AURORA THEME)
+/// ==============================================================================
 class DemoRoleSwitcher extends ConsumerWidget {
   const DemoRoleSwitcher({super.key});
 
@@ -17,16 +20,16 @@ class DemoRoleSwitcher extends ConsumerWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFF0F172A),
+        color: AppColors.surfaceCard,
         border: Border(
           bottom: BorderSide(
-            color: AppColors.electricCyan.withOpacity(0.35),
+            color: AppColors.surfaceBorder,
             width: 1.0,
           ),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.4),
+            color: Colors.black.withOpacity(0.3),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -38,7 +41,7 @@ class DemoRoleSwitcher extends ConsumerWidget {
           // Top mini banner: Transaction ID & Live Status Tracker
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 4.0),
-            color: const Color(0xFF090D16),
+            color: AppColors.obsidian,
             child: Row(
               children: [
                 Container(
@@ -198,7 +201,7 @@ class DemoRoleSwitcher extends ConsumerWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.electricCyan : AppColors.cardBackgroundDark,
+          color: isSelected ? AppColors.electricCyan : AppColors.cardElevated,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: isSelected ? AppColors.electricCyan : AppColors.surfaceBorder,
@@ -207,7 +210,7 @@ class DemoRoleSwitcher extends ConsumerWidget {
           boxShadow: isSelected
               ? [
                   BoxShadow(
-                    color: AppColors.electricCyan.withOpacity(0.35),
+                    color: AppColors.electricCyan.withOpacity(0.3),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),

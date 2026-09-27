@@ -215,7 +215,7 @@ class MockDataService {
         transactionId: transactionId,
         status: TransactionStatus.paymentConfirmed,
         title: 'Payment Confirmed in Escrow',
-        description: '₹1,850.00 secured in SMYL Escrow (Ref: PAY-2026-008721).',
+        description: '₹2,230.00 secured in SMYL Escrow (Ref: SMYL-PAY-2026-008721).',
         location: 'SMYL Financial Gateway',
         timestamp: now.subtract(const Duration(minutes: 20)),
         actor: 'System Escrow',
